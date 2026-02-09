@@ -1,30 +1,30 @@
 pipeline {
-agent any 
+    agent any
 
-environment {
-IMAGE_NAME = "new-app"
-CONTAINER_NAME = "web-app"
-PORT = "3000"
-GIT_REPO = "https://github.com/mrAUTHENTIC-18/project-2.git"
-GIT_BRANCH = "main"
-GIT_CREDENTIALS = "github-credentials2"
-}
+    environment {
+        IMAGE_NAME = "new-app"
+        CONTAINER_NAME = "new-app"
+        PORT = "3000"
+        GIT_REPO = "https://github.com/mrAUTHENTIC-18/PALMER-DEVOPS.git"
+        GIT_BRANCH = "main"
+        GIT_CREDENTIALS = "github-credentials2"
+    }
 
+    stages {
 
-stages {
+        stage('Checkout') {
+            steps {
+                git(
+                    url: env.GIT_REPO,
+                    branch: env.GIT_BRANCH,
+                    credentialsId: env.GIT_CREDENTIALS
+                )
+            }
+        }
 
-stage('checkout') {
-steps {
-git( url: env.GIT_REPO,
-     branch: env.GIT_BRANCH,
-     credentialsId: env.GIT_CREDENTIALS
-)
-}
-}
- 
-    stage('clean previous containers') {
-                                      steps 
-                        """
+        stage('Clean Previous Containers') {
+            steps {
+                sh """
                     docker stop $CONTAINER_NAME || true
                     docker rm $CONTAINER_NAME || true
                     docker network prune -f
@@ -51,10 +51,10 @@ git( url: env.GIT_REPO,
 
     post {
         success {
-            echo "✅ Palmer DevOps App deployed successfully on port $PORT!"
+            echo "✅ New app deployed successfully on port $PORT!"
         }
         failure {
             echo "❌ Deployment failed. Check logs for errors."
         }
     }
-
+}
