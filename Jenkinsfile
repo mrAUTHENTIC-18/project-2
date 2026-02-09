@@ -57,4 +57,4 @@ git( url: env.GIT_REPO,
             echo "❌ Deployment failed. Check logs for errors."
         }
     }
-}
+
