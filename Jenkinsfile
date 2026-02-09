@@ -22,7 +22,7 @@ git( url: env.GIT_REPO,
 }
 }
  
-    STAGE('clean previous containers') {
+    stage('clean previous containers') {
                                       steps {
                                              """
 docker stop $CONTAINER_NAME || true
