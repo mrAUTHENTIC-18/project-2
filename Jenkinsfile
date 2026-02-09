@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "new-app"
         CONTAINER_NAME = "new-app"
         PORT = "3000"
-        GIT_REPO = "https://github.com/mrAUTHENTIC-18/PALMER-DEVOPS.git"
+        GIT_REPO = "https://github.com/mrAUTHENTIC-18/project-2.git"
         GIT_BRANCH = "main"
         GIT_CREDENTIALS = "github-credentials2"
     }
