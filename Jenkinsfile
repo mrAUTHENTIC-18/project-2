@@ -23,9 +23,9 @@ git( url: env.GIT_REPO,
 }
  
     stage('clean previous containers') {
-                                      steps {
-                                             """
-docker stop $CONTAINER_NAME || true
+                                      steps 
+                        """
+                    docker stop $CONTAINER_NAME || true
                     docker rm $CONTAINER_NAME || true
                     docker network prune -f
                 """
