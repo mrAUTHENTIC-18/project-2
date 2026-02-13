@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday My Love ❤️</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #ff1e56, #ff6f91, #ffb6c1);
+        color: white;
+        text-align: center;
+    }
+
+    .container {
+        padding: 60px 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 45px;
+    }
+
+    h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    /* Romantic Video Frame */
+    .video-frame {
+        width: 320px;
+        margin: 30px auto;
+        padding: 12px;
+        border-radius: 30px;
+        background: linear-gradient(45deg, #ff4e50, #ff9a9e);
+        box-shadow: 0 0 40px rgba(255,255,255,0.8);
+    }
+
+    .video-frame video {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .message {
+        margin-top: 30px;
+        font-size: 20px;
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.8;
+        background: rgba(0,0,0,0.35);
+        padding: 35px;
+        border-radius: 25px;
+    }
+
+    .footer {
+        margin-top: 40px;
+        font-size: 20px;
+        font-style: italic;
+    }
+
+    /* Floating Hearts */
+    .heart {
+        position: fixed;
+        color: rgba(255,255,255,0.7);
+        font-size: 25px;
+        animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-10vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+    <h1>Happy Birthday My Love ❤️</h1>
+    <h2>Raji Adedolapo Faridah 💕</h2>
+
+    <!-- Romantic Video -->
+    <div class="video-frame">
+        <video autoplay muted loop controls>
+            <source src="VID-20260206-WA0142.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="message">
+        My Dearest Faridah,<br><br>
+
+        Today heaven celebrates you. I thank Allah for blessing my life with someone as beautiful, kind, and precious as you. 
+        May this new age bring you long life, divine protection, unlimited success, and endless happiness.<br><br>
+
+        You are my peace, my joy, my answered prayer, and my forever Valentine. 
+        Loving you is the best thing that has ever happened to me. 
+        I promise to cherish you, respect you, and stand by you always.<br><br>
+
+        Happy Birthday my queen, my heartbeat, my everything 💖
+    </div>
+
+    <div class="footer">
+        — By your love, Palmer 💘
+    </div>
+</div>
+
+<script>
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
