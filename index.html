@@ -1,4 +1,4 @@
-html_content = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,13 +6,13 @@ html_content = '''<!DOCTYPE html>
     <title>She Is Always Watching You</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: #000;
             color: #fff;
@@ -20,7 +20,7 @@ html_content = '''<!DOCTYPE html>
             overflow: hidden;
             cursor: none;
         }
-        
+
         /* Start Screen */
         #start-screen {
             position: fixed;
@@ -34,39 +34,49 @@ html_content = '''<!DOCTYPE html>
             align-items: center;
             background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
             z-index: 1000;
-            transition: opacity 2s ease;
+            transition: all 2s ease;
         }
-        
+
         .title {
             font-family: 'Creepster', cursive;
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: #8B0000;
-            text-shadow: 0 0 20px #ff0000, 0 0 40px #8B0000;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #8B0000, 0 0 60px #ff0000;
             margin-bottom: 2rem;
-            animation: titlePulse 3s ease-in-out infinite;
-            letter-spacing: 0.1em;
-        }
-        
-        @keyframes titlePulse {
-            0%, 100% { opacity: 0.7; text-shadow: 0 0 20px #ff0000; }
-            50% { opacity: 1; text-shadow: 0 0 40px #ff0000, 0 0 60px #8B0000; }
-        }
-        
-        .warning-box {
-            border: 2px solid #8B0000;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
+            animation: titlePulse 2s ease-in-out infinite;
+            letter-spacing: 0.15em;
             text-align: center;
-            background: rgba(139, 0, 0, 0.1);
-            color: #ff6666;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            padding: 0 20px;
         }
-        
+
+        @keyframes titlePulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 60px #ff0000, 0 0 80px #8B0000; }
+        }
+
+        .warning-box {
+            border: 3px solid #8B0000;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            max-width: 550px;
+            text-align: center;
+            background: rgba(139, 0, 0, 0.15);
+            color: #ff4444;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin: 0 20px 2rem 20px;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+            animation: warningFlicker 4s ease-in-out infinite;
+        }
+
+        @keyframes warningFlicker {
+            0%, 90%, 100% { opacity: 1; border-color: #8B0000; }
+            95% { opacity: 0.7; border-color: #ff0000; box-shadow: 0 0 50px rgba(255, 0, 0, 0.5); }
+        }
+
         #start-btn {
             padding: 1.5rem 4rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-family: 'Creepster', cursive;
             background: transparent;
             color: #8B0000;
@@ -74,15 +84,25 @@ html_content = '''<!DOCTYPE html>
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1001;
+            animation: buttonPulse 2s ease-in-out infinite;
         }
-        
+
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(139, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
+        }
+
         #start-btn:hover {
             background: #8B0000;
             color: #000;
-            box-shadow: 0 0 30px #ff0000;
+            box-shadow: 0 0 50px #ff0000, 0 0 80px #ff0000;
+            transform: scale(1.05);
         }
-        
+
         /* Game Screen */
         #game-screen {
             position: fixed;
@@ -93,192 +113,42 @@ html_content = '''<!DOCTYPE html>
             display: none;
             background: #000;
             overflow: hidden;
+            animation: screenShake 0.5s ease-in-out;
         }
-        
-        /* The Entity Container */
-        #entity {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 500px;
-            transition: transform 0.1s ease-out;
+
+        /* Screen Shake Animation */
+        .shake {
+            animation: shake 0.1s ease-in-out infinite !important;
         }
-        
-        /* Face Base */
-        .face {
-            position: relative;
-            width: 100%;
-            height: 100%;
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -2px) rotate(-0.5deg); }
+            20% { transform: translate(2px, 2px) rotate(0.5deg); }
+            30% { transform: translate(-2px, 2px) rotate(-0.5deg); }
+            40% { transform: translate(2px, -2px) rotate(0.5deg); }
+            50% { transform: translate(-1px, 2px) rotate(-0.3deg); }
+            60% { transform: translate(1px, -2px) rotate(0.3deg); }
+            70% { transform: translate(-2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(2px, -1px) rotate(0.5deg); }
+            90% { transform: translate(-1px, -1px) rotate(-0.3deg); }
         }
-        
-        /* Eyes Container */
-        .eyes-container {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 60px;
-            z-index: 10;
-        }
-        
-        .eye {
-            width: 80px;
-            height: 50px;
-            background: #fff;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-        }
-        
-        .eye::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            background: #000;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
-        }
-        
-        .eye::after {
-            content: '';
-            position: absolute;
-            top: 30%;
-            left: 60%;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
-        }
-        
-        /* Eyelids */
-        .eyelid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0%;
-            background: #000;
-            transition: height 0.1s ease;
-            z-index: 5;
-        }
-        
-        /* Mouth */
-        .mouth {
-            position: absolute;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 20px;
-            background: #000;
-            border: 2px solid #333;
-            border-radius: 0 0 60px 60px;
-            transition: all 0.5s ease;
-            overflow: hidden;
-        }
-        
-        .mouth.open {
-            height: 80px;
-            background: #1a0000;
-            border-color: #8B0000;
-            box-shadow: inset 0 0 20px #ff0000;
-        }
-        
-        .teeth {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .mouth.open .teeth {
-            opacity: 1;
-        }
-        
-        .tooth {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 20px solid #ffffcc;
-        }
-        
-        /* Face Shape */
-        .face-shape {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 70%);
-            border-radius: 50% 50% 45% 45%;
-            opacity: 0.8;
-        }
-        
-        /* Hair */
-        .hair {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 350px;
-            height: 200px;
-            background: linear-gradient(to bottom, #000 0%, transparent 100%);
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-        }
-        
-        /* Text Messages */
-        .message {
-            position: absolute;
-            font-family: 'Special Elite', monospace;
-            font-size: 1.5rem;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
-            opacity: 0;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        
-        /* Screen Effects */
+
+        /* Heavy Static */
         .static {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 0.03) 0px,
-                transparent 1px,
-                transparent 2px,
-                rgba(255, 255, 255, 0.03) 3px
-            );
+            background: 
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.05) 3px),
+                repeating-linear-gradient(90deg, rgba(255,0,0,0.02) 0px, transparent 1px, transparent 2px, rgba(255,0,0,0.02) 3px);
             pointer-events: none;
             opacity: 0;
-            animation: staticNoise 0.1s steps(10) infinite;
             z-index: 50;
         }
-        
-        @keyframes staticNoise {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        
+
         .flash {
             position: fixed;
             top: 0;
@@ -289,20 +159,268 @@ html_content = '''<!DOCTYPE html>
             opacity: 0;
             pointer-events: none;
             z-index: 100;
+            mix-blend-mode: difference;
         }
-        
+
+        .flash-red {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ff0000;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 99;
+            mix-blend-mode: overlay;
+        }
+
         .vignette {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.8) 70%, #000 100%);
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.9) 60%, #000 100%);
             pointer-events: none;
             z-index: 40;
+            animation: vignettePulse 3s ease-in-out infinite;
         }
-        
-        /* Final Scare */
+
+        @keyframes vignettePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* The Entity - Gets closer over time */
+        #entity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 400px;
+            transition: all 0.2s ease-out;
+            z-index: 10;
+        }
+
+        .face-shape {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 320px;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000 70%);
+            border-radius: 50% 50% 45% 45%;
+            opacity: 0.95;
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.3);
+        }
+
+        .hair {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 180px;
+            background: linear-gradient(to bottom, #000 0%, transparent 100%);
+            clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+        }
+
+        /* Eyes - More menacing */
+        .eyes-container {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 20;
+        }
+
+        .eye {
+            width: 70px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(0,0,0,0.2);
+            border: 2px solid #333;
+        }
+
+        .pupil {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle at 30% 30%, #333 0%, #000 50%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.03s ease-out;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .pupil::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+
+        .eyelid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: #000;
+            transition: height 0.08s ease;
+            z-index: 15;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* Mouth - More disturbing */
+        .mouth {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 10px;
+            background: #000;
+            border: 3px solid #222;
+            border-radius: 0 0 60px 60px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+        }
+
+        .mouth.open {
+            height: 100px;
+            background: #0a0000;
+            border-color: #8B0000;
+            box-shadow: inset 0 0 40px #ff0000, 0 0 30px rgba(255, 0, 0, 0.5);
+            animation: mouthTwitch 0.1s ease-in-out infinite;
+        }
+
+        @keyframes mouthTwitch {
+            0%, 100% { transform: translateX(-50%) scaleY(1); }
+            50% { transform: translateX(-50%) scaleY(1.1); }
+        }
+
+        .teeth {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .mouth.open .teeth {
+            opacity: 1;
+        }
+
+        .tooth {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 25px solid #e8e8d0;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));
+        }
+
+        .tooth:nth-child(odd) {
+            border-top-color: #ffffee;
+        }
+
+        .tooth:nth-child(even) {
+            border-top-color: #ddd;
+            transform: translateY(3px);
+        }
+
+        /* Breathing - More labored */
+        .breathing {
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.03); }
+        }
+
+        /* Messages - More disturbing */
+        .message {
+            position: absolute;
+            font-family: 'Special Elite', monospace;
+            font-size: 1.8rem;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #8B0000;
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 100;
+            animation: textGlitch 0.3s ease-in-out infinite;
+            font-weight: bold;
+        }
+
+        @keyframes textGlitch {
+            0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
+            20% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+            40% { transform: translate(2px, -1px); filter: hue-rotate(180deg); }
+            60% { transform: translate(-1px, 2px); filter: hue-rotate(270deg); }
+            80% { transform: translate(1px, -2px); filter: hue-rotate(360deg); }
+        }
+
+        /* Blood - More intense */
+        .blood {
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, #8B0000, #ff0000, #8B0000);
+            opacity: 0;
+            animation: drip 2s ease-in forwards;
+            z-index: 30;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        }
+
+        @keyframes drip {
+            0% { height: 0; opacity: 1; }
+            100% { height: 300px; opacity: 0.9; }
+        }
+
+        .blood-splatter {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: splatter 0.5s ease-out forwards;
+            z-index: 25;
+            pointer-events: none;
+        }
+
+        @keyframes splatter {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Inverted colors effect */
+        .invert {
+            filter: invert(1) hue-rotate(180deg) !important;
+        }
+
+        /* Final Scare - Full screen entity */
         #final-scare {
             position: fixed;
             top: 0;
@@ -310,902 +428,152 @@ html_content = '''<!DOCTYPE html>
             width: 100vw;
             height: 100vh;
             display: none;
-            justify-content: center;
-            align-items: center;
             background: #000;
             z-index: 200;
+            overflow: hidden;
         }
-        
+
+        .scare-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: finalShake 0.05s ease-in-out infinite;
+        }
+
+        @keyframes finalShake {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-5px, 5px) scale(1.02); }
+            50% { transform: translate(5px, -5px) scale(1.01); }
+            75% { transform: translate(-5px, -5px) scale(1.03); }
+            100% { transform: translate(5px, 5px) scale(1); }
+        }
+
         .scare-face {
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, #300 0%, #000 50%);
+            width: 150vw;
+            height: 150vh;
+            background: radial-gradient(circle at center, #1a0000 0%, #000 40%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            animation: scarePulse 0.1s ease-in-out infinite;
+            position: relative;
         }
-        
-        @keyframes scarePulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.5) contrast(1.2); }
-        }
-        
+
         .scare-eyes {
-            font-size: 15rem;
+            font-size: 50vw;
             color: #ff0000;
-            text-shadow: 0 0 50px #ff0000;
-            animation: scareShake 0.05s ease-in-out infinite;
-            line-height: 1;
+            text-shadow: 0 0 100px #ff0000, 0 0 200px #8B0000;
+            animation: scarePulse 0.1s ease-in-out infinite;
+            line-height: 0.8;
+            z-index: 10;
         }
-        
-        @keyframes scareShake {
-            0%, 100% { transform: translate(-2px, -2px); }
-            25% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, 2px); }
-            75% { transform: translate(2px, -2px); }
-        }
-        
-        .scare-text {
-            font-family: 'Creepster', cursive;
-            font-size: 4rem;
-            color: #fff;
-            text-shadow: 0 0 30px #ff0000;
-            margin-top: 2rem;
-            animation: textFlicker 0.1s ease-in-out infinite;
-        }
-        
-        @keyframes textFlicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        /* Audio Control */
-        #audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 300;
-            color: #333;
-            font-size: 0.8rem;
-        }
-        
-        /* Blood Drip Effect */
-        .blood {
-            position: absolute;
-            width: 3px;
-            background: linear-gradient(to bottom, #8B0000, #ff0000);
-            opacity: 0;
-            animation: drip 3s ease-in forwards;
-        }
-        
-        @keyframes drip {
-            0% { height: 0; opacity: 1; }
-            100% { height: 200px; opacity: 0.8; }
-        }
-        
-        /* Breathing Animation */
-        .breathing {
-            animation: breathe 4s ease-in-out infinite;
-        }
-        
-        @keyframes breathe {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.02); }
-        }
-        
-        /* Whisper Text */
-        .whisper {
-            position: absolute;
-            font-size: 1rem;
-            color: #444;
-            opacity: 0;
-            font-style: italic;
-        }
-    </style>
-</head>
-<body>
-    <!-- Start Screen -->
-    <div id="start-screen">
-        <h1 class="title">She Is Always Watching You</h1>
-        <div class="warning-box">
-            <strong>⚠ WARNING ⚠</strong><br><br>
-            This game contains flashing images, sudden loud noises, and intense horror content.<br><br>
-            Not recommended for people with heart conditions, epilepsy, or pregnant women.<br><br>
-            Player discretion is strongly advised.
-        </div>
-        <button id="start-btn">Start Game</button>
-    </div>
-    
-    <!-- Game Screen -->
-    <div id="game-screen">
-        <div class="static" id="static"></div>
-        <div class="flash" id="flash"></div>
-        <div class="vignette"></div>
-        
-        <div id="entity" class="breathing">
-            <div class="hair"></div>
-            <div class="face-shape"></div>
-            <div class="eyes-container">
-                <div class="eye" id="left-eye">
-                    <div class="eyelid"></div>
-                </div>
-                <div class="eye" id="right-eye">
-                    <div class="eyelid"></div>
-                </div>
-            </div>
-            <div class="mouth" id="mouth">
-                <div class="teeth">
-                    <div class="tooth" style="left: 10px;"></div>
-                    <div class="tooth" style="left: 35px;"></div>
-                    <div class="tooth" style="left: 60px;"></div>
-                    <div class="tooth" style="left: 85px;"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="messages-container"></div>
-    </div>
-    
-    <!-- Final Scare Screen -->
-    <div id="final-scare">
-        <div class="scare-face">
-            <div class="scare-eyes">👁 👁</div>
-            <div class="scare-text">SHE FOUND YOU</div>
-        </div>
-    </div>
-    
-    <div id="audio-control">🔊 Sound Enabled</div>
 
-    <script>
-        // Audio Context for generating horror sounds
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
-        let isAudioEnabled = false;
-        
-        function initAudio() {
-            audioCtx = new AudioContext();
-            isAudioEnabled = true;
+        @keyframes scarePulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: brightness(2); }
         }
-        
-        function playTone(frequency, duration, type = 'sine', volume = 0.1) {
-            if (!isAudioEnabled) return;
-            
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = type;
-            
-            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + duration);
-        }
-        
-        function playHeartbeat() {
-            if (!isAudioEnabled) return;
-            
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.setValueAtTime(40, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.3);
-        }
-        
-        function playWhisper() {
-            if (!isAudioEnabled) return;
-            
-            // Create white noise for whisper effect
-            const bufferSize = audioCtx.sampleRate * 2;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = Math.random() * 2 - 1;
-            }
-            
-            const noise = audioCtx.createBufferSource();
-            noise.buffer = buffer;
-            
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'bandpass';
-            filter.frequency.value = 1000;
-            
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
-            
-            noise.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            noise.start();
-        }
-        
-        function playScream() {
-            if (!isAudioEnabled) return;
-            
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-            
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 1);
-        }
-        
-        // Game State
-        let gameActive = false;
-        let mouseX = 0;
-        let mouseY = 0;
-        let gameTime = 0;
-        let intensity = 0;
-        
-        // DOM Elements
-        const startScreen = document.getElementById('start-screen');
-        const gameScreen = document.getElementById('game-screen');
-        const startBtn = document.getElementById('start-btn');
-        const leftEye = document.getElementById('left-eye');
-        const rightEye = document.getElementById('right-eye');
-        const mouth = document.getElementById('mouth');
-        const entity = document.getElementById('entity');
-        const staticOverlay = document.getElementById('static');
-        const flashOverlay = document.getElementById('flash');
-        const messagesContainer = document.getElementById('messages-container');
-        const finalScare = document.getElementById('final-scare');
-        
-        // Messages
-        const horrorMessages = [
-            "Do not look into my eyes...",
-            "I can see your fear...",
-            "You cannot hide...",
-            "I am always here...",
-            "Behind you...",
-            "Don't turn around...",
-            "Your soul is mine...",
-            "I know what you did...",
-            "Closer... closer...",
-            "Look at me..."
-        ];
-        
-        // Start Game
-        startBtn.addEventListener('click', () => {
-            initAudio();
-            startScreen.style.opacity = '0';
-            setTimeout(() => {
-                startScreen.style.display = 'none';
-                gameScreen.style.display = 'block';
-                gameActive = true;
-                startGame();
-            }, 2000);
-        });
-        
-        // Mouse Tracking
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            if (gameActive) {
-                updateEyes();
-            }
-        });
-        
-        function updateEyes() {
-            const eyes = [leftEye, rightEye];
-            
-            eyes.forEach(eye => {
-                const rect = eye.getBoundingClientRect();
-                const eyeCenterX = rect.left + rect.width / 2;
-                const eyeCenterY = rect.top + rect.height / 2;
-                
-                const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
-                const distance = Math.min(10, Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 20);
-                
-                const pupilX = Math.cos(angle) * distance;
-                const pupilY = Math.sin(angle) * distance;
-                
-                eye.style.setProperty('--pupil-x', pupilX + 'px');
-                eye.style.setProperty('--pupil-y', pupilY + 'px');
-                
-                const before = eye.querySelector('::before') || eye;
-                const after = eye.querySelector('::after') || eye;
-                
-                eye.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
-            });
-        }
-        
-        function startGame() {
-            // Initial heartbeat
-            setInterval(() => {
-                if (gameActive && intensity > 0.3) {
-                    playHeartbeat();
-                }
-            }, 60000 / (60 + intensity * 60)); // Increasing heart rate
-            
-            // Game progression
-            const gameLoop = setInterval(() => {
-                if (!gameActive) {
-                    clearInterval(gameLoop);
-                    return;
-                }
-                
-                gameTime += 0.1;
-                intensity = Math.min(1, gameTime / 30); // Ramp up intensity over 30 seconds
-                
-                // Random events based on intensity
-                if (Math.random() < 0.02 + intensity * 0.05) {
-                    triggerRandomEvent();
-                }
-                
-                // Mouth movement
-                if (Math.random() < 0.01 + intensity * 0.02) {
-                    mouth.classList.toggle('open');
-                    if (mouth.classList.contains('open')) {
-                        playTone(100, 0.5, 'sawtooth', 0.1);
-                    }
-                }
-                
-                // Static effect
-                if (Math.random() < 0.05 + intensity * 0.1) {
-                    triggerStatic();
-                }
-                
-                // Entity movement
-                if (Math.random() < 0.1) {
-                    const offsetX = (Math.random() - 0.5) * 20 * intensity;
-                    const offsetY = (Math.random() - 0.5) * 20 * intensity;
-                    entity.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
-                }
-                
-                // End game after 45 seconds
-                if (gameTime > 45) {
-                    triggerFinalScare();
-                    clearInterval(gameLoop);
-                }
-            }, 100);
-        }
-        
-        function triggerRandomEvent() {
-            const events = [
-                showMessage,
-                blinkEyes,
-                playWhisper,
-                createBloodDrip,
-                flashScreen
-            ];
-            
-            const event = events[Math.floor(Math.random() * events.length)];
-            event();
-        }
-        
-        function showMessage() {
-            const msg = document.createElement('div');
-            msg.className = 'message';
-            msg.textContent = horrorMessages[Math.floor(Math.random() * horrorMessages.length)];
-            msg.style.left = Math.random() * 80 + 10 + '%';
-            msg.style.top = Math.random() * 80 + 10 + '%';
-            messagesContainer.appendChild(msg);
-            
-            // Animate in
-            setTimeout(() => {
-                msg.style.opacity = '1';
-                msg.style.transition = 'opacity 0.5s ease';
-            }, 10);
-            
-            // Animate out
-            setTimeout(() => {
-                msg.style.opacity = '0';
-                setTimeout(() => msg.remove(), 500);
-            }, 2000 + Math.random() * 2000);
-            
-            playWhisper();
-        }
-        
-        function blinkEyes() {
-            const eyelids = document.querySelectorAll('.eyelid');
-            eyelids.forEach(lid => lid.style.height = '100%');
-            setTimeout(() => {
-                eyelids.forEach(lid => lid.style.height = '0%');
-            }, 150);
-        }
-        
-        function createBloodDrip() {
-            const drip = document.createElement('div');
-            drip.className = 'blood';
-            drip.style.left = Math.random() * 100 + '%';
-            drip.style.top = '0';
-            gameScreen.appendChild(drip);
-            
-            setTimeout(() => drip.remove(), 3000);
-        }
-        
-        function triggerStatic() {
-            staticOverlay.style.opacity = Math.random() * 0.3 + 0.1;
-            setTimeout(() => {
-                staticOverlay.style.opacity = '0';
-            }, 100 + Math.random() * 200);
-            
-            playTone(50 + Math.random() * 100, 0.1, 'square', 0.05);
-        }
-        
-        function flashScreen() {
-            flashOverlay.style.opacity = '0.8';
-            setTimeout(() => {
-                flashOverlay.style.opacity = '0';
-            }, 50);
-            
-            playTone(800, 0.1, 'sawtooth', 0.2);
-        }
-        
-        function triggerFinalScare() {
-            gameActive = false;
-            
-            // Build up tension
-            const tension = setInterval(() => {
-                playHeartbeat();
-                flashScreen();
-            }, 200);
-            
-            setTimeout(() => {
-                clearInterval(tension);
-                gameScreen.style.display = 'none';
-                finalScare.style.display = 'flex';
-                playScream();
-                
-                // Continuous scary effects
-                setInterval(() => {
-                    playTone(100 + Math.random() * 200, 0.5, 'sawtooth', 0.3);
-                }, 500);
-            }, 3000);
-        }
-        
-        // Prevent context menu
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        
-        // Prevent leaving page easily
-        window.addEventListener('beforeunload', (e) => {
-            if (gameActive) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
-    </script>
-</body>
-</html>'''
 
-# Save to output file
-with open('/mnt/kimi/output/horror_game.html', 'w') as f:
-    f.write(html_content)
-
-print("HTML file saved successfully!")
-print(f"File size: {len(html_content)} characters")
-html_content = '''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>She Is Always Watching You</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
+        .scare-mouth {
+            width: 60vw;
+            height: 30vh;
             background: #000;
-            color: #fff;
-            font-family: 'Special Elite', monospace;
+            border: 10px solid #8B0000;
+            border-radius: 0 0 50% 50%;
+            box-shadow: inset 0 0 100px #ff0000, 0 0 50px #ff0000;
+            margin-top: -5vh;
+            animation: mouthScream 0.2s ease-in-out infinite;
+            position: relative;
             overflow: hidden;
-            cursor: none;
         }
-        
-        /* Start Screen */
-        #start-screen {
-            position: fixed;
+
+        @keyframes mouthScream {
+            0%, 100% { height: 30vh; }
+            50% { height: 35vh; }
+        }
+
+        .scare-mouth::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 20px,
+                rgba(255, 255, 255, 0.1) 20px,
+                rgba(255, 255, 255, 0.1) 40px
+            );
+        }
+
+        .scare-text {
+            font-family: 'Creepster', cursive;
+            font-size: 5rem;
+            color: #fff;
+            text-shadow: 0 0 50px #ff0000, 0 0 100px #ff0000;
+            position: absolute;
+            bottom: 10%;
+            animation: textFlicker 0.1s ease-in-out infinite;
+            text-align: center;
+            z-index: 20;
+        }
+
+        @keyframes textFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Static overlay for final scare */
+        .final-static {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.1) 0px,
+                transparent 2px,
+                transparent 4px,
+                rgba(255, 255, 255, 0.1) 4px
+            );
+            animation: staticFlicker 0.05s steps(5) infinite;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        @keyframes staticFlicker {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.3; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-out {
+            opacity: 0;
             transition: opacity 2s ease;
         }
-        
-        .title {
-            font-family: 'Creepster', cursive;
-            font-size: 4rem;
-            color: #8B0000;
-            text-shadow: 0 0 20px #ff0000, 0 0 40px #8B0000;
-            margin-bottom: 2rem;
-            animation: titlePulse 3s ease-in-out infinite;
-            letter-spacing: 0.1em;
-        }
-        
-        @keyframes titlePulse {
-            0%, 100% { opacity: 0.7; text-shadow: 0 0 20px #ff0000; }
-            50% { opacity: 1; text-shadow: 0 0 40px #ff0000, 0 0 60px #8B0000; }
-        }
-        
-        .warning-box {
-            border: 2px solid #8B0000;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            text-align: center;
-            background: rgba(139, 0, 0, 0.1);
-            color: #ff6666;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        
-        #start-btn {
-            padding: 1.5rem 4rem;
-            font-size: 1.5rem;
-            font-family: 'Creepster', cursive;
-            background: transparent;
-            color: #8B0000;
-            border: 3px solid #8B0000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        
-        #start-btn:hover {
-            background: #8B0000;
-            color: #000;
-            box-shadow: 0 0 30px #ff0000;
-        }
-        
-        /* Game Screen */
-        #game-screen {
+
+        /* Distance indicator */
+        #distance-warning {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: none;
-            background: #000;
-            overflow: hidden;
-        }
-        
-        /* The Entity Container */
-        #entity {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 500px;
-            transition: transform 0.1s ease-out;
-        }
-        
-        /* Face Base */
-        .face {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* Eyes Container */
-        .eyes-container {
-            position: absolute;
-            top: 30%;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            gap: 60px;
-            z-index: 10;
-        }
-        
-        .eye {
-            width: 80px;
-            height: 50px;
-            background: #fff;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-        }
-        
-        .eye::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            background: #000;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
-        }
-        
-        .eye::after {
-            content: '';
-            position: absolute;
-            top: 30%;
-            left: 60%;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
-        }
-        
-        /* Eyelids */
-        .eyelid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0%;
-            background: #000;
-            transition: height 0.1s ease;
-            z-index: 5;
-        }
-        
-        /* Mouth */
-        .mouth {
-            position: absolute;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 20px;
-            background: #000;
-            border: 2px solid #333;
-            border-radius: 0 0 60px 60px;
-            transition: all 0.5s ease;
-            overflow: hidden;
-        }
-        
-        .mouth.open {
-            height: 80px;
-            background: #1a0000;
-            border-color: #8B0000;
-            box-shadow: inset 0 0 20px #ff0000;
-        }
-        
-        .teeth {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .mouth.open .teeth {
-            opacity: 1;
-        }
-        
-        .tooth {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 20px solid #ffffcc;
-        }
-        
-        /* Face Shape */
-        .face-shape {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 70%);
-            border-radius: 50% 50% 45% 45%;
-            opacity: 0.8;
-        }
-        
-        /* Hair */
-        .hair {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 350px;
-            height: 200px;
-            background: linear-gradient(to bottom, #000 0%, transparent 100%);
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-        }
-        
-        /* Text Messages */
-        .message {
-            position: absolute;
-            font-family: 'Special Elite', monospace;
-            font-size: 1.5rem;
+            font-family: 'Creepster', cursive;
+            font-size: 2rem;
             color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
+            text-shadow: 0 0 20px #ff0000;
             opacity: 0;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        
-        /* Screen Effects */
-        .static {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 0.03) 0px,
-                transparent 1px,
-                transparent 2px,
-                rgba(255, 255, 255, 0.03) 3px
-            );
-            pointer-events: none;
-            opacity: 0;
-            animation: staticNoise 0.1s steps(10) infinite;
-            z-index: 50;
-        }
-        
-        @keyframes staticNoise {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        
-        .flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #fff;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 100;
-        }
-        
-        .vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.8) 70%, #000 100%);
-            pointer-events: none;
-            z-index: 40;
-        }
-        
-        /* Final Scare */
-        #final-scare {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-            z-index: 200;
-        }
-        
-        .scare-face {
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, #300 0%, #000 50%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: scarePulse 0.1s ease-in-out infinite;
-        }
-        
-        @keyframes scarePulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.5) contrast(1.2); }
-        }
-        
-        .scare-eyes {
-            font-size: 15rem;
-            color: #ff0000;
-            text-shadow: 0 0 50px #ff0000;
-            animation: scareShake 0.05s ease-in-out infinite;
-            line-height: 1;
-        }
-        
-        @keyframes scareShake {
-            0%, 100% { transform: translate(-2px, -2px); }
-            25% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, 2px); }
-            75% { transform: translate(2px, -2px); }
-        }
-        
-        .scare-text {
-            font-family: 'Creepster', cursive;
-            font-size: 4rem;
-            color: #fff;
-            text-shadow: 0 0 30px #ff0000;
-            margin-top: 2rem;
-            animation: textFlicker 0.1s ease-in-out infinite;
-        }
-        
-        @keyframes textFlicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        /* Audio Control */
-        #audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 300;
-            color: #333;
-            font-size: 0.8rem;
-        }
-        
-        /* Blood Drip Effect */
-        .blood {
-            position: absolute;
-            width: 3px;
-            background: linear-gradient(to bottom, #8B0000, #ff0000);
-            opacity: 0;
-            animation: drip 3s ease-in forwards;
-        }
-        
-        @keyframes drip {
-            0% { height: 0; opacity: 1; }
-            100% { height: 200px; opacity: 0.8; }
-        }
-        
-        /* Breathing Animation */
-        .breathing {
-            animation: breathe 4s ease-in-out infinite;
-        }
-        
-        @keyframes breathe {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.02); }
-        }
-        
-        /* Whisper Text */
-        .whisper {
-            position: absolute;
-            font-size: 1rem;
-            color: #444;
-            opacity: 0;
-            font-style: italic;
+            z-index: 60;
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
@@ -1214,382 +582,518 @@ html_content = '''<!DOCTYPE html>
     <div id="start-screen">
         <h1 class="title">She Is Always Watching You</h1>
         <div class="warning-box">
-            <strong>⚠ WARNING ⚠</strong><br><br>
-            This game contains flashing images, sudden loud noises, and intense horror content.<br><br>
-            Not recommended for people with heart conditions, epilepsy, or pregnant women.<br><br>
-            Player discretion is strongly advised.
+            <strong>⚠ EXTREME WARNING ⚠</strong><br><br>
+            This experience contains intense flashing lights, loud disturbing noises,<br>
+            psychological horror, and aggressive jump scares.<br><br>
+            NOT RECOMMENDED for people with epilepsy, heart conditions,<br>
+            anxiety disorders, or those who are easily frightened.<br><br>
+            <strong>Turn up your volume for maximum effect.</strong><br><br>
+            Player discretion is STRONGLY advised.
         </div>
-        <button id="start-btn">Start Game</button>
+        <button id="start-btn" onclick="startGame()">ENTER IF YOU DARE</button>
     </div>
-    
+
     <!-- Game Screen -->
     <div id="game-screen">
+        <div id="distance-warning">SHE IS GETTING CLOSER</div>
         <div class="static" id="static"></div>
         <div class="flash" id="flash"></div>
+        <div class="flash-red" id="flash-red"></div>
         <div class="vignette"></div>
-        
+
         <div id="entity" class="breathing">
             <div class="hair"></div>
             <div class="face-shape"></div>
             <div class="eyes-container">
                 <div class="eye" id="left-eye">
                     <div class="eyelid"></div>
+                    <div class="pupil"></div>
                 </div>
                 <div class="eye" id="right-eye">
                     <div class="eyelid"></div>
+                    <div class="pupil"></div>
                 </div>
             </div>
             <div class="mouth" id="mouth">
                 <div class="teeth">
-                    <div class="tooth" style="left: 10px;"></div>
-                    <div class="tooth" style="left: 35px;"></div>
-                    <div class="tooth" style="left: 60px;"></div>
+                    <div class="tooth" style="left: 5px;"></div>
+                    <div class="tooth" style="left: 25px;"></div>
+                    <div class="tooth" style="left: 45px;"></div>
+                    <div class="tooth" style="left: 65px;"></div>
                     <div class="tooth" style="left: 85px;"></div>
                 </div>
             </div>
         </div>
-        
+
         <div id="messages-container"></div>
     </div>
-    
+
     <!-- Final Scare Screen -->
     <div id="final-scare">
-        <div class="scare-face">
-            <div class="scare-eyes">👁 👁</div>
-            <div class="scare-text">SHE FOUND YOU</div>
+        <div class="scare-container">
+            <div class="scare-face">
+                <div class="final-static"></div>
+                <div class="scare-eyes">👁 👁</div>
+                <div class="scare-mouth"></div>
+                <div class="scare-text">SHE GOT YOU</div>
+            </div>
         </div>
     </div>
-    
-    <div id="audio-control">🔊 Sound Enabled</div>
 
     <script>
-        // Audio Context for generating horror sounds
+        // Audio Context
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
         let isAudioEnabled = false;
-        
+
         function initAudio() {
-            audioCtx = new AudioContext();
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
             isAudioEnabled = true;
         }
-        
+
+        // Sound Effects
         function playTone(frequency, duration, type = 'sine', volume = 0.1) {
-            if (!isAudioEnabled) return;
-            
+            if (!isAudioEnabled || !audioCtx) return;
+
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
+
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
+
             oscillator.frequency.value = frequency;
             oscillator.type = type;
-            
+
             gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-            
+
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + duration);
         }
-        
-        function playHeartbeat() {
-            if (!isAudioEnabled) return;
-            
+
+        function playDissonance() {
+            if (!isAudioEnabled || !audioCtx) return;
+
+            // Play multiple detuned frequencies for horror effect
+            const freqs = [110, 115, 220, 233];
+            freqs.forEach((freq, i) => {
+                setTimeout(() => playTone(freq, 2, 'sawtooth', 0.15), i * 50);
+            });
+        }
+
+        function playHeartbeat(intensity = 1) {
+            if (!isAudioEnabled || !audioCtx) return;
+
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
+
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.setValueAtTime(40, audioCtx.currentTime);
+
+            oscillator.frequency.setValueAtTime(50 * intensity, audioCtx.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+            gainNode.gain.setValueAtTime(0.4 * intensity, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            
+
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.3);
         }
-        
+
         function playWhisper() {
-            if (!isAudioEnabled) return;
-            
-            // Create white noise for whisper effect
+            if (!isAudioEnabled || !audioCtx) return;
+
             const bufferSize = audioCtx.sampleRate * 2;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
-            
+
             for (let i = 0; i < bufferSize; i++) {
                 data[i] = Math.random() * 2 - 1;
             }
-            
+
             const noise = audioCtx.createBufferSource();
             noise.buffer = buffer;
-            
+
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'bandpass';
-            filter.frequency.value = 1000;
-            
+            filter.frequency.value = 800 + Math.random() * 400;
+            filter.Q.value = 10;
+
             const gainNode = audioCtx.createGain();
-            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
-            
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+
             noise.connect(filter);
             filter.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
+
             noise.start();
         }
-        
-        function playScream() {
-            if (!isAudioEnabled) return;
-            
+
+        function playScrape() {
+            if (!isAudioEnabled || !audioCtx) return;
+
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
+
             oscillator.type = 'sawtooth';
             oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-            
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
-            
+            oscillator.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.5);
+
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
             oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 1);
+            oscillator.stop(audioCtx.currentTime + 0.5);
         }
-        
+
+        function playFinalScream() {
+            if (!isAudioEnabled || !audioCtx) return;
+
+            // Layer multiple oscillators for terrifying scream
+            const types = ['sawtooth', 'square', 'sawtooth'];
+            const freqs = [150, 300, 450];
+
+            types.forEach((type, i) => {
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = type;
+                oscillator.frequency.setValueAtTime(freqs[i], audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(freqs[i] * 4, audioCtx.currentTime + 1);
+
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 2);
+            });
+
+            // Add noise
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2);
+
+            noise.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noise.start();
+        }
+
         // Game State
         let gameActive = false;
         let mouseX = 0;
         let mouseY = 0;
         let gameTime = 0;
         let intensity = 0;
-        
+        let gameLoop = null;
+        let proximity = 1; // 1 = far, 0 = close
+
         // DOM Elements
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
-        const startBtn = document.getElementById('start-btn');
-        const leftEye = document.getElementById('left-eye');
-        const rightEye = document.getElementById('right-eye');
+        const leftPupil = document.querySelector('#left-eye .pupil');
+        const rightPupil = document.querySelector('#right-eye .pupil');
         const mouth = document.getElementById('mouth');
         const entity = document.getElementById('entity');
         const staticOverlay = document.getElementById('static');
         const flashOverlay = document.getElementById('flash');
+        const flashRed = document.getElementById('flash-red');
         const messagesContainer = document.getElementById('messages-container');
         const finalScare = document.getElementById('final-scare');
-        
-        // Messages
+        const distanceWarning = document.getElementById('distance-warning');
+
+        // Messages - More disturbing
         const horrorMessages = [
-            "Do not look into my eyes...",
-            "I can see your fear...",
-            "You cannot hide...",
-            "I am always here...",
-            "Behind you...",
+            "Don't look away...",
+            "I can taste your fear...",
+            "Your heartbeat is so loud...",
+            "I'm right behind you...",
             "Don't turn around...",
-            "Your soul is mine...",
-            "I know what you did...",
+            "I see what you see...",
+            "Your soul screams...",
+            "I'm getting hungry...",
             "Closer... closer...",
-            "Look at me..."
+            "Look into my eyes...",
+            "You can't escape...",
+            "I know your name...",
+            "Your time is running out...",
+            "I'm inside your mind...",
+            "Don't blink..."
         ];
-        
+
         // Start Game
-        startBtn.addEventListener('click', () => {
+        function startGame() {
             initAudio();
-            startScreen.style.opacity = '0';
+
+            startScreen.classList.add('fade-out');
+
             setTimeout(() => {
-                startScreen.style.display = 'none';
+                startScreen.classList.add('hidden');
                 gameScreen.style.display = 'block';
                 gameActive = true;
-                startGame();
+
+                // Initial scare sound
+                playDissonance();
+
+                runGame();
             }, 2000);
-        });
-        
+        }
+
         // Mouse Tracking
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
+
             if (gameActive) {
                 updateEyes();
             }
         });
-        
+
         function updateEyes() {
-            const eyes = [leftEye, rightEye];
-            
+            const eyes = [
+                { pupil: leftPupil, container: document.getElementById('left-eye') },
+                { pupil: rightPupil, container: document.getElementById('right-eye') }
+            ];
+
             eyes.forEach(eye => {
-                const rect = eye.getBoundingClientRect();
+                const rect = eye.container.getBoundingClientRect();
                 const eyeCenterX = rect.left + rect.width / 2;
                 const eyeCenterY = rect.top + rect.height / 2;
-                
+
                 const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
-                const distance = Math.min(10, Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 20);
-                
+                const distance = Math.min(20, Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 15);
+
                 const pupilX = Math.cos(angle) * distance;
                 const pupilY = Math.sin(angle) * distance;
-                
-                eye.style.setProperty('--pupil-x', pupilX + 'px');
-                eye.style.setProperty('--pupil-y', pupilY + 'px');
-                
-                const before = eye.querySelector('::before') || eye;
-                const after = eye.querySelector('::after') || eye;
-                
-                eye.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+
+                eye.pupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
             });
         }
-        
-        function startGame() {
-            // Initial heartbeat
-            setInterval(() => {
-                if (gameActive && intensity > 0.3) {
-                    playHeartbeat();
+
+        function runGame() {
+            let heartbeatInterval = setInterval(() => {
+                if (gameActive) {
+                    playHeartbeat(0.5 + (1 - proximity) * 0.5);
                 }
-            }, 60000 / (60 + intensity * 60)); // Increasing heart rate
-            
-            // Game progression
-            const gameLoop = setInterval(() => {
+            }, 600 + Math.random() * 400);
+
+            gameLoop = setInterval(() => {
                 if (!gameActive) {
                     clearInterval(gameLoop);
+                    clearInterval(heartbeatInterval);
                     return;
                 }
-                
+
                 gameTime += 0.1;
-                intensity = Math.min(1, gameTime / 30); // Ramp up intensity over 30 seconds
-                
-                // Random events based on intensity
-                if (Math.random() < 0.02 + intensity * 0.05) {
+                intensity = Math.min(1, gameTime / 40);
+                proximity = Math.max(0.3, 1 - (gameTime / 50)); // Entity gets closer
+
+                // Update entity size (gets closer)
+                const scale = 1 + (1 - proximity) * 2;
+                entity.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+                // Show distance warning when close
+                if (proximity < 0.6 && distanceWarning.style.opacity === '0') {
+                    distanceWarning.style.opacity = '1';
+                    playDissonance();
+                }
+
+                // Screen shake at high intensity
+                if (intensity > 0.6 && Math.random() < 0.1) {
+                    gameScreen.classList.add('shake');
+                    setTimeout(() => gameScreen.classList.remove('shake'), 200);
+                }
+
+                // Random events
+                if (Math.random() < 0.03 + intensity * 0.08) {
                     triggerRandomEvent();
                 }
-                
-                // Mouth movement
-                if (Math.random() < 0.01 + intensity * 0.02) {
+
+                // Mouth movement - more frequent as intensity increases
+                if (Math.random() < 0.02 + intensity * 0.05) {
                     mouth.classList.toggle('open');
                     if (mouth.classList.contains('open')) {
-                        playTone(100, 0.5, 'sawtooth', 0.1);
+                        playScrape();
                     }
                 }
-                
+
                 // Static effect
-                if (Math.random() < 0.05 + intensity * 0.1) {
+                if (Math.random() < 0.08 + intensity * 0.15) {
                     triggerStatic();
                 }
-                
-                // Entity movement
-                if (Math.random() < 0.1) {
-                    const offsetX = (Math.random() - 0.5) * 20 * intensity;
-                    const offsetY = (Math.random() - 0.5) * 20 * intensity;
-                    entity.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
+
+                // Red flash at high intensity
+                if (intensity > 0.7 && Math.random() < 0.05) {
+                    flashRed.style.opacity = '0.5';
+                    setTimeout(() => flashRed.style.opacity = '0', 100);
                 }
-                
-                // End game after 45 seconds
-                if (gameTime > 45) {
+
+                // Invert colors occasionally
+                if (intensity > 0.8 && Math.random() < 0.02) {
+                    document.body.classList.add('invert');
+                    setTimeout(() => document.body.classList.remove('invert'), 100);
+                }
+
+                // End game after 50 seconds
+                if (gameTime > 50) {
                     triggerFinalScare();
                     clearInterval(gameLoop);
+                    clearInterval(heartbeatInterval);
                 }
             }, 100);
         }
-        
+
         function triggerRandomEvent() {
             const events = [
                 showMessage,
                 blinkEyes,
                 playWhisper,
                 createBloodDrip,
-                flashScreen
+                createBloodSplatter,
+                flashScreen,
+                playDissonance
             ];
-            
+
             const event = events[Math.floor(Math.random() * events.length)];
             event();
         }
-        
+
         function showMessage() {
             const msg = document.createElement('div');
             msg.className = 'message';
             msg.textContent = horrorMessages[Math.floor(Math.random() * horrorMessages.length)];
-            msg.style.left = Math.random() * 80 + 10 + '%';
-            msg.style.top = Math.random() * 80 + 10 + '%';
+            msg.style.left = Math.random() * 60 + 20 + '%';
+            msg.style.top = Math.random() * 60 + 20 + '%';
             messagesContainer.appendChild(msg);
-            
-            // Animate in
+
             setTimeout(() => {
                 msg.style.opacity = '1';
-                msg.style.transition = 'opacity 0.5s ease';
             }, 10);
-            
-            // Animate out
+
             setTimeout(() => {
                 msg.style.opacity = '0';
                 setTimeout(() => msg.remove(), 500);
-            }, 2000 + Math.random() * 2000);
-            
+            }, 1500 + Math.random() * 1500);
+
             playWhisper();
         }
-        
+
         function blinkEyes() {
             const eyelids = document.querySelectorAll('.eyelid');
             eyelids.forEach(lid => lid.style.height = '100%');
             setTimeout(() => {
                 eyelids.forEach(lid => lid.style.height = '0%');
-            }, 150);
+            }, 100 + Math.random() * 100);
         }
-        
+
         function createBloodDrip() {
             const drip = document.createElement('div');
             drip.className = 'blood';
             drip.style.left = Math.random() * 100 + '%';
             drip.style.top = '0';
             gameScreen.appendChild(drip);
-            
+
             setTimeout(() => drip.remove(), 3000);
         }
-        
+
+        function createBloodSplatter() {
+            const splatter = document.createElement('div');
+            splatter.className = 'blood-splatter';
+            splatter.style.left = Math.random() * 80 + 10 + '%';
+            splatter.style.top = Math.random() * 80 + 10 + '%';
+            gameScreen.appendChild(splatter);
+
+            setTimeout(() => splatter.remove(), 1000);
+        }
+
         function triggerStatic() {
-            staticOverlay.style.opacity = Math.random() * 0.3 + 0.1;
+            staticOverlay.style.opacity = Math.random() * 0.5 + 0.2;
             setTimeout(() => {
                 staticOverlay.style.opacity = '0';
-            }, 100 + Math.random() * 200);
-            
-            playTone(50 + Math.random() * 100, 0.1, 'square', 0.05);
+            }, 50 + Math.random() * 150);
+
+            playTone(60 + Math.random() * 100, 0.2, 'square', 0.1);
         }
-        
+
         function flashScreen() {
-            flashOverlay.style.opacity = '0.8';
+            flashOverlay.style.opacity = '0.9';
             setTimeout(() => {
                 flashOverlay.style.opacity = '0';
-            }, 50);
-            
-            playTone(800, 0.1, 'sawtooth', 0.2);
+            }, 30 + Math.random() * 50);
+
+            playTone(400 + Math.random() * 400, 0.1, 'sawtooth', 0.3);
         }
-        
+
         function triggerFinalScare() {
             gameActive = false;
-            
+
             // Build up tension
+            let tensionCount = 0;
             const tension = setInterval(() => {
-                playHeartbeat();
+                playHeartbeat(2);
                 flashScreen();
-            }, 200);
-            
-            setTimeout(() => {
-                clearInterval(tension);
-                gameScreen.style.display = 'none';
-                finalScare.style.display = 'flex';
-                playScream();
-                
-                // Continuous scary effects
-                setInterval(() => {
-                    playTone(100 + Math.random() * 200, 0.5, 'sawtooth', 0.3);
-                }, 500);
-            }, 3000);
+                gameScreen.classList.add('shake');
+
+                // Rapid messages
+                if (tensionCount % 3 === 0) {
+                    const msg = document.createElement('div');
+                    msg.className = 'message';
+                    msg.textContent = "SHE'S HERE";
+                    msg.style.left = '50%';
+                    msg.style.top = '50%';
+                    msg.style.transform = 'translate(-50%, -50%)';
+                    msg.style.fontSize = '3rem';
+                    msg.style.opacity = '1';
+                    gameScreen.appendChild(msg);
+                    setTimeout(() => msg.remove(), 500);
+                }
+
+                tensionCount++;
+
+                if (tensionCount > 15) {
+                    clearInterval(tension);
+                    gameScreen.classList.remove('shake');
+
+                    // FINAL SCREAM
+                    gameScreen.style.display = 'none';
+                    finalScare.style.display = 'flex';
+                    playFinalScream();
+
+                    // Continuous horror sounds
+                    setInterval(() => {
+                        playTone(100 + Math.random() * 300, 0.3, 'sawtooth', 0.4);
+                    }, 300);
+                }
+            }, 150);
         }
-        
-        // Prevent context menu
+
+        // Prevent context menu and selection
         document.addEventListener('contextmenu', e => e.preventDefault());
-        
-        // Prevent leaving page easily
+        document.addEventListener('selectstart', e => e.preventDefault());
+
+        // Prevent leaving
         window.addEventListener('beforeunload', (e) => {
             if (gameActive) {
                 e.preventDefault();
@@ -1598,11 +1102,4 @@ html_content = '''<!DOCTYPE html>
         });
     </script>
 </body>
-</html>'''
-
-# Save to output file
-with open('/mnt/kimi/output/horror_game.html', 'w') as f:
-    f.write(html_content)
-
-print("HTML file saved successfully!")
-print(f"File size: {len(html_content)} characters")
+</html>
